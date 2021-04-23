@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout d'un article{% endblock %}
+
+{% block body %}
+
+
+<div class="container">
+    <h1>Edit l'article</h1>
+    <p>Dernière modification le {{ article.dateAjout |date('d/m/y') }}</p>
+    {{ form_start(form, { 'attr': {'class' : 'row'} }) }}
+        <div class="form-group">
+            {{ form_label(form.titre) }}
+            {{ form_widget(form.titre, {'attr' : {'placeholder': 'Titre' , 'class' : 'form-control'}}) }}
+            <span class="text-danger">{{ form_errors(form.titre) }}</span>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.categorie) }}
+            {{ form_widget(form.categorie) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.contenu) }}
+            {{ form_widget(form.contenu, {'attr' : {'placeholder': 'Contenu', 'class' : 'form-control' }}) }}
+        </div>
+        {% if article.imgSrc %}
+            <img  src="{{ asset('images/' ~ article.imgSrc) }}">
+        {% endif %}
+        <div class="form-group">
+            {{ form_label(form.imgSrc, 'Ajouter une image') }}
+            {{ form_widget(form.imgSrc, {'attr' : {'placeholder': 'Contenu', 'class' : 'form-control'}}) }}
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des catégories{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Liste des catégories</h1>
+
+        <a type="button" class="btn btn-primary" href="{{ path('categorieadd') }}">Ajouter une catégorie</a>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Nombre d'articles</th>
+                <th scope="col">Modifier</th>
+                <th scope="col">Supprimer</th>
+            </tr>
+            </thead>
+            {% set nb = 1 %}
+            <tbody>
+            {% for categorie in categories %}
+                <tr>
+                    <th scope="row">{{ nb }}</th>
+                    <td><a href="{{ path('categorieshow', {'id' : categorie.id}) }}">{{ categorie.nom }}</a></td>
+                    <td>{{ categorie.articles | length }}</td>
+                    <td><a class="text-info" href="{{ path('categorieedit', {'id' : categorie.id}) }}">Editer</a></td>
+                    <td><a class="text-danger" href="{{ path('categoriedelete', {'id' : categorie.id}) }}">Supprimer</a></td>
+                </tr>
+                {% set nb = nb + 1 %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

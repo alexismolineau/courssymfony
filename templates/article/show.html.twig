@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des articles{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>{{ article.titre }}</h1>
+    <p>Catégorie : <a href="{{ path('categorieshow', {'id' : article.categorie.id}) }}">{{ article.categorie.nom }}</a></p>
+    <p>Dernière modification le {{ article.dateAjout |date('d/m/y') }}</p>
+
+
+    <div class="row">
+        <a type="button" href="{{ path('articleedit', {'id' : article.id}) }}">Modifer l'article</a>
+        <a type="button" href="{{ path('articledelete', {'id' : article.id}) }}">Supprimer l'article</a>
+    </div>
+
+    {% if article.imgSrc %}
+        <img  src="{{ asset('images/' ~ article.imgSrc) }}">
+    {% endif %}
+
+    <p>{{ article.contenu }}</p>
+
+    <div>
+        <h2>Commentaires</h2>
+        {% if commentaires %}
+            {% for commentaire in commentaires %}
+                <div>
+                    <p>{{ commentaire.utilisateur.firstName }}</p>
+                    <p>{{ commentaire.contenu }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div>Pas encore de commentaire</div>
+        {% endif %}
+    </div>
+
+    {{ form_start(form, { 'attr': {'class' : 'row'} }) }}
+    <div class="form-group">
+        {{ form_label(form.contenu) }}
+        {{ form_widget(form.contenu, {'attr' : {'placeholder': 'Votre commentaire' , 'class' : 'form-control'}}) }}
+        <span class="text-danger">{{ form_errors(form.contenu) }}</span>
+    </div>
+    <div class="form-group">
+        {{ form_widget(form.submit, {'attr' : {'class' : 'btn btn-primary'}, 'label' : 'Ajouter'}) }}
+    </div>
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}
